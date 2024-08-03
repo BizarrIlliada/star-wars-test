@@ -1,11 +1,21 @@
 
 <template>
-  <div>1</div>
-  <div>2</div>
-  <div>3</div>
-  <div>4</div>
+  <div class="person" v-for="person in people" :key="person.id">
+  {{ person.name }}</div>
 </template>
 
 <script setup lang="ts">
+import { onMounted, ref } from 'vue';
+import { useSwApi } from '@/api/sw.api';
+import type { IPerson } from '@/types';
 
+const swApi = useSwApi();
+
+const people = ref<IPerson[]>([]);
+
+onMounted(async () => {
+  people.value = (await swApi.getPeople({ page: 1 })).results;
+
+  console.log(people.value);
+});
 </script>
