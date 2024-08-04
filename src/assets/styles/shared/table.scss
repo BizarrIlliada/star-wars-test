@@ -15,10 +15,10 @@
 
 .table td, .table th {
   text-align: center;
-  padding: 8px;
+  padding: 16px;
 }
 
-.table td {
+.table td:not(:last-child) {
   border-right: 1px solid $surface-100;
 }
 

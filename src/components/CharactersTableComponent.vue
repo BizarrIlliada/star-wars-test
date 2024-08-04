@@ -13,7 +13,7 @@
           <th>Mass</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody v-if="characters.length">
         <tr
           class="characters-table__row"
           v-for="character in characters"
@@ -61,6 +61,12 @@ function navigateToCharacterPage(characterId: number) {
 
   td {
     text-transform: capitalize;
+  }
+
+  &__placeholder {
+    height: 100%;
+    color: $surface-400;
+    font-size: 14px;
   }
 }
 </style>

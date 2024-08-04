@@ -1,7 +1,6 @@
-
 <template>
   <div class="characters-page">
-    <CharactersTableComponent :characters="people" />
+    <CharactersTableComponent :characters="people" class="characters-page__table" />
 
     <PaginationComponent
       v-if="paginationData"
@@ -51,10 +50,14 @@ watch(() => route.query.page, async () => {
 
 <style scoped lang="scss">
 .characters-page {
+  &__table {
+    margin-bottom: 12px;
+  }
+
   &__pagination {
     color: $surface-50;
     background-color: $primary-200;
-    margin-bottom: 30px;
+    box-shadow: 0px 10px 25px rgba( 0, 0, 0, 0.2 );
   
     @include tablet {
       background-color: $primary-900;

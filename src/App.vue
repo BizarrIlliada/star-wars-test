@@ -19,10 +19,12 @@ import { RouterView } from 'vue-router';
 .app-header {
   display: flex;
   justify-content: center;
+  text-align: center;
   align-items: center;
+  padding: 12px 16px;
   color: $surface-50;
   background-color: $primary-200;
-  height: 80px;
+  min-height: 80px;
 }
 
 .app-main {

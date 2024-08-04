@@ -15,8 +15,20 @@ export function useHelpers() {
     router.push({ query: { ...route.query, ...queryParams } });
   }
 
+  function delay(ms: number): Promise<void> {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  function getArraysIntersection(array1: any, array2: any) {
+    const set2 = new Set(array2);
+
+    return array1.filter((value: any) => set2.has(value));
+  }
+
   return {
     getPageFromUrl,
     setQueryParams,
+    delay,
+    getArraysIntersection,
   };
 }
