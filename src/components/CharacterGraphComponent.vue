@@ -19,7 +19,7 @@ import type { IFilm, IPerson, IStarship } from '@/types';
 const props = defineProps<{ characterId: number }>();
 
 const swApi = useSwApi();
-const { getArraysIntersection } = useHelpers();
+const { getArraysIntersection, normalizeHTTPParams } = useHelpers();
 
 const character = ref<IPerson | null>(null);
 const charactersFilms = ref<IFilm[] | null>(null);
@@ -62,7 +62,7 @@ async function setGraphValues() {
   }
 
   const characterNode = {
-    id: character.value!.id.toString(),
+    id:  character.value!.name + character.value!.id,
     position,
     label: character.value!.name,
     type: 'output',
@@ -75,16 +75,19 @@ async function setGraphValues() {
     const position = calculateOutputNodePosition(index, charactersFilms.value!.length, characterNode.position, 250);
 
     nodes.value.push({
-      id: film.id.toString(),
+      id: film.title + film.id,
       position,
       label: film.title,
     });
 
     edges.value.push({
       id: `character${character.value!.id}->film${film.id}`,
-      source: character.value!.id.toString(),
-      target: film.id.toString(),
+      source: character.value!.name + character.value!.id,
+      target: film.title + film.id,
       type: 'smoothstep',
+      style: {
+          'stroke': 'black',
+        },
     });
 
     // getting movies starships and setting their nodes
@@ -93,7 +96,7 @@ async function setGraphValues() {
       const position = calculateOutputNodePosition(index, arr.length, characterNode.position, 400);
 
       nodes.value.push({
-        id: starship.id.toString(),
+        id: starship.name + starship.id,
         position,
         label: starship.name,
         type: 'output',
@@ -101,8 +104,12 @@ async function setGraphValues() {
 
       edges.value.push({
         id: `film${film.id}->starship${starship.id}`,
-        source: film.id.toString(),
-        target: starship.id.toString(),
+        source: film.title + film.id,
+        target: starship.name + starship.id,
+        style: {
+          'stroke': 'black',
+          'stroke-dasharray': '5, 5',
+        },
       });
     });
   });
@@ -113,13 +120,13 @@ async function getCharacter() {
 }
 
 async function getCharactersFilms() {
-  charactersFilms.value = (await swApi.getFilms({ id__in: character.value!.films.join(',') })).results;
+  charactersFilms.value = (await swApi.getFilms(normalizeHTTPParams({ id__in: character.value!.films }))).results;
 }
 
 async function getCharactersStarshipsFromMovies(moviesStarshipIds: number[]): Promise<IStarship[]> {
   const starshipsIds = getArraysIntersection(moviesStarshipIds, character.value!.starships);
   if (starshipsIds.length) {
-    return (await swApi.getStarships({ id__in: starshipsIds.join(',') })).results;
+    return (await swApi.getStarships(normalizeHTTPParams({ id__in: starshipsIds }))).results;
   }
 
   return [];
