@@ -11,11 +11,12 @@
   width: 100%;
   max-width: 100%;
   white-space: nowrap;
+  background-color: $surface-50;
 }
 
 .table td, .table th {
   text-align: center;
-  padding: 16px;
+  padding: 16px 8px;
 }
 
 .table td:not(:last-child) {
