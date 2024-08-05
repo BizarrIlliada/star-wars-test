@@ -1,5 +1,7 @@
-import { useRouter, type LocationQueryRaw } from 'vue-router';
+import { useRouter, type LocationQueryRaw, type LocationQueryValue } from 'vue-router';
 import { useRoute } from 'vue-router';
+
+type HTTPParamsInputData = { [key: string]: string | number | LocationQueryValue | string[] | number[] | LocationQueryValue[] };
 
 export function useHelpers() {
   const router = useRouter();
@@ -21,13 +23,15 @@ export function useHelpers() {
     return array1.filter((value: any) => set2.has(value));
   }
 
-  function normalizeHTTPParams(params: { [key: string]: string | number | string[] | number[] }): { [key: string]: string } {
+  function normalizeHTTPParams(params: HTTPParamsInputData): { [key: string]: string } {
     const result: { [key: string]: string } = {};
 
     for (const key in params) {
       if (Object.prototype.hasOwnProperty.call(params, key)) {
         const value = params[key];
-  
+
+        if (value === null) continue;
+
         if (Array.isArray(value)) {
           result[key] = value.join(',');
         } else {
