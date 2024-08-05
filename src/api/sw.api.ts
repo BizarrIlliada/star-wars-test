@@ -1,11 +1,15 @@
 import axiosInstance from './index';
-import type { IFilm, IPeopleHTTPResponse, IPerson, IStarship } from '@/types';
-import { useHelpers } from '@/tools/hooks/helpers.hook';
+import type {
+  IPeopleHTTPResponse,
+  IPerson,
+  IFilmsHTTPResponse,
+  IFilm,
+  IStarship,
+  IStarshipsHTTPResponse,
+} from '@/types';
 
 export function useSwApi() {
-  const { delay } = useHelpers();
-
-  function getPeople(params: { page: number }): Promise<IPeopleHTTPResponse> {
+  function getPeople(params?: { [key: string]: any }): Promise<IPeopleHTTPResponse> {
     return axiosInstance.get<any, IPeopleHTTPResponse>('/people', { params })
       .catch(err => Promise.reject(err));
   }
@@ -15,25 +19,19 @@ export function useSwApi() {
       .catch(err => Promise.reject(err));
   }
 
+  function getFilms(params?: { [key: string]: any }): Promise<IFilmsHTTPResponse> {
+    return axiosInstance.get<any, IFilmsHTTPResponse>('/films', { params })
+      .catch(err => Promise.reject(err));
+  }
+
   function getFilmById(id: number): Promise<IFilm> {
     return axiosInstance.get<any, IFilm>(`/films/${id}`)
       .catch(err => Promise.reject(err));
   }
 
-  async function getFilmsByIds(ids: number[]): Promise<IFilm[]> {
-    // TODO: 429 (Too Many Requests)
-    // const promises = ids.map(id => getFilmById(id));
-    // return Promise.all(promises);
-
-    const promises: IFilm[] = [];
-
-    for (const id of ids) {
-      const film = await getFilmById(id);
-      promises.push(film);
-      await delay(50);
-    }
-
-    return Promise.all(promises);
+  function getStarships(params?: { [key: string]: any }): Promise<IStarshipsHTTPResponse> {
+    return axiosInstance.get<any, IStarshipsHTTPResponse>('/starships', { params })
+      .catch(err => Promise.reject(err));
   }
 
   async function getStarshipById(id: number): Promise<IStarship> {
@@ -41,28 +39,12 @@ export function useSwApi() {
       .catch(err => Promise.reject(err));
   }
 
-  async function getStarshipsByIds(ids: number[]): Promise<IStarship[]> {
-    // TODO: 429 (Too Many Requests)
-    // const promises = ids.map(id => getStarshipById(id));
-    // return Promise.all(promises);
-
-    const promises: IStarship[] = [];
-
-    for (const id of ids) {
-      const film = await getStarshipById(id);
-      promises.push(film);
-      await delay(50);
-    }
-
-    return Promise.all(promises);
-  }
-
   return {
     getPeople,
     getPerson,
+    getFilms,
     getFilmById,
-    getFilmsByIds,
+    getStarships,
     getStarshipById,
-    getStarshipsByIds,
   }
 }

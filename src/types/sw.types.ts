@@ -1,7 +1,10 @@
-export interface IPeopleHTTPResponse {
+interface HTTPResponse {
   count: number
   next: string
   previous: string
+}
+
+export interface IPeopleHTTPResponse extends HTTPResponse {
   results: IPerson[]
 }
 
@@ -25,6 +28,10 @@ export interface IPerson {
   url: string
 }
 
+export interface IFilmsHTTPResponse extends HTTPResponse {
+  results: IFilm[]
+}
+
 export interface IFilm {
   id: number
   title: string
@@ -41,6 +48,10 @@ export interface IFilm {
   created: string
   edited: string
   url: string
+}
+
+export interface IStarshipsHTTPResponse extends HTTPResponse {
+  results: IStarship[]
 }
 
 export interface IStarship {

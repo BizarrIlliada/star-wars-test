@@ -14,7 +14,7 @@ import { useHelpers } from '@/tools/hooks/helpers.hook';
 import { onMounted, ref, watch } from 'vue';
 import { VueFlow } from '@vue-flow/core';
 import type { Edge, Node } from '@vue-flow/core';
-import type { IFilm, IPerson } from '@/types';
+import type { IFilm, IPerson, IStarship } from '@/types';
 
 const props = defineProps<{ characterId: number }>();
 
@@ -88,9 +88,9 @@ async function setGraphValues() {
     });
 
     // getting movies starships and setting their nodes
-    const filmStarships = await getCharactersStarships(film.starships);
-    filmStarships.forEach((starship, index) => {
-      const position = calculateOutputNodePosition(index, film.starships.length, characterNode.position, 400);
+    const filmStarships = await getCharactersStarshipsFromMovies(film.starships);
+    filmStarships.forEach((starship, index, arr) => {
+      const position = calculateOutputNodePosition(index, arr.length, characterNode.position, 400);
 
       nodes.value.push({
         id: starship.id.toString(),
@@ -113,14 +113,16 @@ async function getCharacter() {
 }
 
 async function getCharactersFilms() {
-  charactersFilms.value = await swApi.getFilmsByIds(character.value!.films);
+  charactersFilms.value = (await swApi.getFilms({ id__in: character.value!.films.join(',') })).results;
 }
 
-async function getCharactersStarships(moviesStarshipIds: number[]) {
-  const starshipsIds = getArraysIntersection(moviesStarshipIds, character.value?.starships);
-  const starships = await swApi.getStarshipsByIds(starshipsIds);
+async function getCharactersStarshipsFromMovies(moviesStarshipIds: number[]): Promise<IStarship[]> {
+  const starshipsIds = getArraysIntersection(moviesStarshipIds, character.value!.starships);
+  if (starshipsIds.length) {
+    return (await swApi.getStarships({ id__in: starshipsIds.join(',') })).results;
+  }
 
-  return starships;
+  return [];
 }
 
 watch(() => props.characterId, async () => {
