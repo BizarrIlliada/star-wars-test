@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import CharactersTableComponent from '@/components/CharactersTableComponent.vue';
+import CharactersTableComponent from './CharactersTableComponent.vue';
 import PaginationComponent from '@/components/shared/PaginationComponent.vue';
 
 import { onMounted, ref, watch } from 'vue';
@@ -64,4 +64,4 @@ watch(() => route.query.page, async () => {
     }
   }
 }
-</style>
+</style>@/views/CharactersTableComponent.vue

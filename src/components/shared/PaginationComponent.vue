@@ -82,11 +82,24 @@ function onPaginationEvent(paginationEvent: 'fullBack' | 'back' | 'forward' | 'f
   align-items: center;
   padding: 12px 16px;
 
+  &__info {
+    color: black;
+
+    @include tablet {
+      color: $surface-50;
+    }
+  }
+
   &__icons {
     display: flex;
     gap: 4px;
-  }
+    color: black;
 
+    @include tablet {
+      color: $surface-50;
+    }
+  }
+  
   &__icon {
     padding: 5px;
     cursor: pointer;

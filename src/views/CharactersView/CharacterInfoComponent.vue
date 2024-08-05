@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import CharacterGraphComponent from '@/components/CharacterGraphComponent.vue';
+import CharacterGraphComponent from './CharacterGraphComponent.vue';
 import { useRoute } from 'vue-router';
 import { useRouter } from 'vue-router';
 

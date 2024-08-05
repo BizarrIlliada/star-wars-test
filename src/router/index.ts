@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -11,16 +11,16 @@ const router = createRouter({
     {
       path: '/characters',
       name: 'characters',
-      component: () => import('@/views/CharactersPage.vue'),
+      component: () => import('@/views/CharactersView/CharactersPage.vue'),
       children: [
         {
           path: ':id',
           name: 'character',
-          component: () => import('@/components/CharacterInfoComponent.vue'),
+          component: () => import('@/views/CharactersView/CharacterInfoComponent.vue'),
         }
       ],
-    }
-  ]
-})
+    },
+  ],
+});
 
-export default router
+export default router;
