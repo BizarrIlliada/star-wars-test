@@ -68,7 +68,6 @@ function closeModal() {
   &__title {
     font-size: 22px;
     font-weight: 400;
-    color: $surface-600;
   }
 
   &__close-icon {

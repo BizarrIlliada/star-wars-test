@@ -52,7 +52,7 @@ function navigateToCharacterPage(characterId: number) {
 </script>
 
 <style scoped lang="scss">
-@import '../assets/styles/shared/table.scss';
+@import '@/assets/styles/shared/table.scss';
 
 .characters-table {
   &__row {
