@@ -9,7 +9,7 @@ import type {
 } from '@/types';
 
 export function useSwApi() {
-  function getPeople(params?: { [key: string]: any }): Promise<IPeopleHTTPResponse> {
+  function getPeople(params?: { [key: string]: string }): Promise<IPeopleHTTPResponse> {
     return axiosInstance.get<any, IPeopleHTTPResponse>('/people', { params })
       .catch(err => Promise.reject(err));
   }
@@ -19,7 +19,7 @@ export function useSwApi() {
       .catch(err => Promise.reject(err));
   }
 
-  function getFilms(params?: { [key: string]: any }): Promise<IFilmsHTTPResponse> {
+  function getFilms(params?: { [key: string]: string }): Promise<IFilmsHTTPResponse> {
     return axiosInstance.get<any, IFilmsHTTPResponse>('/films', { params })
       .catch(err => Promise.reject(err));
   }
@@ -29,7 +29,7 @@ export function useSwApi() {
       .catch(err => Promise.reject(err));
   }
 
-  function getStarships(params?: { [key: string]: any }): Promise<IStarshipsHTTPResponse> {
+  function getStarships(params?: { [key: string]: string }): Promise<IStarshipsHTTPResponse> {
     return axiosInstance.get<any, IStarshipsHTTPResponse>('/starships', { params })
       .catch(err => Promise.reject(err));
   }

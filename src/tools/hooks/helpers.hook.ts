@@ -21,9 +21,28 @@ export function useHelpers() {
     return array1.filter((value: any) => set2.has(value));
   }
 
+  function normalizeHTTPParams(params: { [key: string]: string | number | string[] | number[] }): { [key: string]: string } {
+    const result: { [key: string]: string } = {};
+
+    for (const key in params) {
+      if (Object.prototype.hasOwnProperty.call(params, key)) {
+        const value = params[key];
+  
+        if (Array.isArray(value)) {
+          result[key] = value.join(',');
+        } else {
+          result[key] = value.toString();
+        }
+      }
+    }
+
+    return result;
+  }
+
   return {
     getPageFromUrl,
     setQueryParams,
     getArraysIntersection,
+    normalizeHTTPParams,
   };
 }
