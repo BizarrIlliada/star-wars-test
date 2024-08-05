@@ -24,7 +24,7 @@ import type { IPerson, IServerPagination } from '@/types';
 
 const route = useRoute();
 const swApi = useSwApi();
-const { setQueryParams } = useHelpers();
+const { setQueryParams, normalizeHTTPParams } = useHelpers();
 
 const people = ref<IPerson[]>([]);
 const paginationData = ref<IServerPagination | null>(null);
@@ -34,7 +34,7 @@ onMounted(async () => {
 });
 
 async function loadPeopleFromServer() {
-  const { count, next, previous, results } = (await swApi.getPeople({ page: route.query.page ? +route.query.page : 1 }));
+  const { count, next, previous, results } = (await swApi.getPeople(normalizeHTTPParams({ page: route.query.page ?? 1 })));
   people.value = results;
   paginationData.value = { count, next, previous };
 }
