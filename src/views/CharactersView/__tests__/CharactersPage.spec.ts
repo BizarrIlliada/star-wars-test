@@ -1,35 +1,46 @@
-import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
-import { mount, VueWrapper } from '@vue/test-utils';
+import { describe, it, expect, vi, afterEach } from 'vitest';
+import { mount } from '@vue/test-utils';
+import router from '@/router';
+import { useRoute, useRouter } from 'vue-router';
+import { useSwApi } from '@/tests';
 
-import { routerMock } from '@/tests';
 import CharactersPage from '@/views/CharactersView/CharactersPage.vue';
-import CharactersTableComponent from '@/views/CharactersView/CharactersTableComponent.vue';
+import CharactersTableComponent from '../CharactersTableComponent.vue';
 import PaginationComponent from '@/components/shared/PaginationComponent.vue';
 
+vi.mock('vue-router');
+vi.mock('@/api/sw.api', () => ({ useSwApi }));
 
 describe('CharactersPage', () => {
-  let wrapper: VueWrapper<any>
-
-  beforeEach(async () => {
-    wrapper = mount(CharactersPage);
-    await routerMock.isReady();
+  vi.mocked(useRouter).mockReturnValue({
+    ...router,
   });
 
-  afterEach(() => {
-    wrapper.unmount();
+  vi.mocked(useRoute).mockReturnValue({
+    fullPath: '/characters?page=1',
+    hash: '',
+    matched: [],
+    meta: {},
+    name: 'characters',
+    params: {},
+    path: '/characters',
+    query: { page: '1' },
+    redirectedFrom: undefined,
   });
+
+  const wrapper = mount(CharactersPage);
 
   it('renders properly', () => {
     expect(wrapper.exists()).toBe(true);
   });
 
-  it('renders characters table', () => {
-    const charactersTableComponent = wrapper.findComponent(CharactersTableComponent);
-    expect(charactersTableComponent.exists()).toBe(true);
+  it('renders table', () => {
+    expect(wrapper.findComponent(CharactersTableComponent).exists()).toBe(true);
   });
 
-  it('renders pagination component', async () => {
-    const paginationComponent = wrapper.findComponent(PaginationComponent);
-    expect(paginationComponent.exists()).toBe(true);
+  it('renders pagination', async () => {
+    expect(wrapper.findComponent(PaginationComponent).exists()).toBe(true);
   });
+
+  // TODO: add more functionality tests
 });

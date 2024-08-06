@@ -6,14 +6,14 @@
 
 <script setup lang="ts">
 import CharacterGraphComponent from './CharacterGraphComponent.vue';
-import { useRoute } from 'vue-router';
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
+import { RoutesNames } from '@/router';
 
 const route = useRoute();
 const router = useRouter();
 
 function closeModal() {
-  router.push({ name: 'characters', query: { ...route.query } });
+  router.push({ name: RoutesNames.CHARACTERS, query: { ...route.query } });
 }
 </script>
 

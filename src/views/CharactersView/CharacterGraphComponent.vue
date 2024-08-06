@@ -19,7 +19,7 @@ import type { IFilm, IPerson, IStarship } from '@/types';
 const props = defineProps<{ characterId: number }>();
 
 const swApi = useSwApi();
-const { getArraysIntersection, normalizeHTTPParams } = useHelpers();
+const { getUniqueValArraysIntersection, normalizeHTTPParams } = useHelpers();
 
 const character = ref<IPerson | null>(null);
 const charactersFilms = ref<IFilm[] | null>(null);
@@ -124,7 +124,7 @@ async function getCharactersFilms() {
 }
 
 async function getCharactersStarshipsFromMovies(moviesStarshipIds: number[]): Promise<IStarship[]> {
-  const starshipsIds = getArraysIntersection(moviesStarshipIds, character.value!.starships);
+  const starshipsIds = getUniqueValArraysIntersection(moviesStarshipIds, character.value!.starships);
   if (starshipsIds.length) {
     return (await swApi.getStarships(normalizeHTTPParams({ id__in: starshipsIds }))).results;
   }
