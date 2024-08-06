@@ -279,8 +279,8 @@ export const useSwApi = vi.fn(() => ({
         "url": "https://sw-api.starnavi.io/people/21/"
       }
     ],
-    count: 10,
-    next: null,
+    count: 82,
+    next: "https://sw-api.starnavi.io/people?page=2",
     previous: null,
   }),
   getPerson: vi.fn().mockResolvedValue({
@@ -444,7 +444,7 @@ export const useSwApi = vi.fn(() => ({
         "url": "https://sw-api.starnavi.io/films/2/"
       }
     ],
-    count: 2,
+    count: 6,
     next: null,
     previous: null,
   }),
@@ -607,8 +607,8 @@ export const useSwApi = vi.fn(() => ({
         "url": "https://sw-api.starnavi.io/starships/41/"
       },
     ],
-    count: 4,
-    next: null,
+    count: 36,
+    next: "https://sw-api.starnavi.io/starships?page=2",
     previous: null,
   }),
   getStarshipById: vi.fn().mockResolvedValue({
@@ -641,8 +641,4 @@ export const useSwApi = vi.fn(() => ({
     "edited": "2014-12-20T21:23:49.880000Z",
     "url": "https://sw-api.starnavi.io/starships/10/"
   }),
-}));
-
-vi.mock('@/api/sw.api', () => ({
-  useSwApi,
 }));

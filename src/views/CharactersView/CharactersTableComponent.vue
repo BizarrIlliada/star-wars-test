@@ -34,8 +34,8 @@
 </template>
 
 <script setup lang="ts">
-import { useRouter } from 'vue-router';
-import { useRoute } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
+import { RoutesNames } from '@/router';
 import type { IPerson } from '@/types';
 
 interface Props {
@@ -47,7 +47,7 @@ const router = useRouter();
 const route = useRoute();
 
 function navigateToCharacterPage(characterId: number) {
-  router.push({ name: 'character', params: { id: characterId }, query: { ...route.query } });
+  router.push({ name: RoutesNames.CHARACTER, params: { id: characterId }, query: { ...route.query } });
 }
 </script>
 

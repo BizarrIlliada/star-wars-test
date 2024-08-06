@@ -64,4 +64,4 @@ watch(() => route.query.page, async () => {
     }
   }
 }
-</style>@/views/CharactersTableComponent.vue
+</style>

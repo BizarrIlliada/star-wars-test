@@ -1,5 +1,4 @@
-import { useRouter, type LocationQueryRaw, type LocationQueryValue } from 'vue-router';
-import { useRoute } from 'vue-router';
+import { useRouter, useRoute, type LocationQueryRaw, type LocationQueryValue } from 'vue-router';
 
 type HTTPParamsInputData = { [key: string]: string | number | LocationQueryValue | string[] | number[] | LocationQueryValue[] };
 
@@ -17,10 +16,10 @@ export function useHelpers() {
     router.push({ query: { ...route.query, ...queryParams } });
   }
 
-  function getArraysIntersection(array1: any[], array2: any[]) {
+  function getUniqueValArraysIntersection<T>(array1: T[], array2: T[]) {
     const set2 = new Set(array2);
 
-    return array1.filter((value: any) => set2.has(value));
+    return array1.filter((value: T) => set2.has(value));
   }
 
   function normalizeHTTPParams(params: HTTPParamsInputData): { [key: string]: string } {
@@ -46,7 +45,7 @@ export function useHelpers() {
   return {
     getPageFromUrl,
     setQueryParams,
-    getArraysIntersection,
+    getUniqueValArraysIntersection,
     normalizeHTTPParams,
   };
 }
