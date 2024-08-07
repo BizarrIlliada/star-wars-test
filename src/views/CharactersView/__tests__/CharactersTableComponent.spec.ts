@@ -6,7 +6,6 @@ import { useSwApi } from '@/tests';
 
 vi.mock('@/api/sw.api', () => ({ useSwApi }));
 
-
 describe('CharactersTableComponent', async () => {
   const characters = (await useSwApi().getPeople()).results;
 
